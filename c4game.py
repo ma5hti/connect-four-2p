@@ -68,8 +68,8 @@ def main_menu_input():
 ░█░█░█▀▀░█░█░█░█
 ░▀░▀░▀▀▀░▀░▀░▀▀▀
 
-P - Play
-S - Scores & Players
+S - Start
+P - Players
 H - Help
 C - Credits
 E - Exit
@@ -80,20 +80,9 @@ E - Exit
         tmp = input()
 
     tmp = tmp.upper()
-    if tmp == "P":
+    if tmp == "S":
         pass
-    elif tmp == "S":
-        print(
-"""
-░█▀▀░█▀▀░█▀█░█▀▄░█▀▀░█▀▀
-░▀▀█░█░░░█░█░█▀▄░█▀▀░▀▀█
-░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
-
-"""
-        )
-        print(player_x_name + " (X): " + str(player_x_score))
-        print(player_o_name + " (O): " + str(player_o_score))
-        print("\n--------------------\n\n")
+    elif tmp == "P":
         print(
 """
 ░█▀█░█░░░█▀█░█░█░█▀▀░█▀▄░█▀▀
@@ -179,6 +168,29 @@ def get_names():
     time.sleep(3)
     main_menu_input()
 
+def game_start():
+    pass
+
+# --- Selection Logic ---
+# this function calculates all available places and takes a selection from player
+
+def take_selection(letter):
+    options = {}
+    options_list = []
+    for i in range(-1, -7, -1):
+        for j in range(7):
+            if chr(j + 65) not in options and board[i][j] == " ":
+                options[chr(j + 65)] = i + 7
+    for key, value in options.items():
+        options_list.append(str(key) + str(value))
+    print("Please select one of the following options:")
+    print(options_list)
+    tmp = ""
+    while tmp.upper() not in options_list:
+        tmp = input()
+    tmp = tmp.upper()
+    board[int(tmp[1]) - 7][ord(tmp[0]) - 65] = letter
+
 # --- INITIAL VARIABLES ---
 # 6 lists with 7 empty spots as in the original 6x7 board
 
@@ -191,9 +203,6 @@ r6 = [" ", " ", " ", " ", " ", " ", " "]
 board = [r1, r2, r3, r4, r5, r6]
 letters = ["A", "B", "C", "D", "E", "F", "G"]
 numbers = ["1", "2", "3", "4", "5", "6"]
-
-player_x_score = 0
-player_o_score = 0
 
 game_menu = ["P", "S", "H", "C", "E"]
 
