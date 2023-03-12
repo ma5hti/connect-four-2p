@@ -50,6 +50,12 @@ def vertical_check(letter):
                 return True
     return False
 
+# --- Player Check ---
+# this function checks if there are any diagonal, horizontal, or vertical sets of 4 for input "X" or "O"
+
+def player_check(letter):
+    return diagonal_check(letter) or horizontal_check(letter) or vertical_check(letter)
+
 # --- INITIAL VARIABLES ---
 # 6 lists with 7 empty spots as in the original 6x7 board
 
@@ -60,3 +66,5 @@ r4 = [" ", " ", " ", " ", " ", " ", " "]
 r5 = [" ", " ", " ", " ", " ", " ", " "]
 r6 = [" ", " ", " ", " ", " ", " ", " "]
 board = [r1, r2, r3, r4, r5, r6]
+letters = ["A", "B", "C", "D", "E", "F", "G"]
+numbers = ["1", "2", "3", "4", "5", "6"]
