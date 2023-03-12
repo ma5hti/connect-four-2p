@@ -1,4 +1,5 @@
 import time
+from random import *
 
 # --- Graphic Board ---
 # prints the board in cosole with all the current values in lists r1-r6
@@ -58,6 +59,14 @@ def vertical_check(letter):
 def player_check(letter):
     return diagonal_check(letter) or horizontal_check(letter) or vertical_check(letter)
 
+def check_winner():
+    if player_check("X"):
+        print("Player X ({}) has won the game".format(player_x_name))
+    elif player_check("O"):
+        print("Player O ({}) has won the game".format(player_o_name))
+    else:
+        print("IT'S A TIE!")
+
 # --- Main Menu ---
 # this function prints the mainmenu and takes inputs and opens new sections accordingly
 
@@ -81,7 +90,7 @@ E - Exit
 
     tmp = tmp.upper()
     if tmp == "S":
-        pass
+        game_start()
     elif tmp == "P":
         print(
 """
@@ -168,13 +177,34 @@ def get_names():
     time.sleep(3)
     main_menu_input()
 
+# --- Game Start ---
+# this function initializes the game
+
 def game_start():
-    pass
+    print("The game has begun. The first player will be chosen by the flip of a coin.\nFlipping...\n")
+    time.sleep(2)
+    coin = randint(1, 2)
+    current_player = 0
+    if coin == 1:
+        print("The first player is " + player_x_name + " (X)")
+    else:
+        current_player = 1
+        print("The first player is " + player_o_name + " (O)")
+
+    while not(player_check("X")) and not(player_check("O")):
+        if current_player % 2 == 0:
+            take_selection("X")
+        else:
+            take_selection("O")
+        current_player += 1
+
+    check_winner()
 
 # --- Selection Logic ---
 # this function calculates all available places and takes a selection from player
 
 def take_selection(letter):
+    print_board()
     options = {}
     options_list = []
     for i in range(-1, -7, -1):
@@ -183,7 +213,9 @@ def take_selection(letter):
                 options[chr(j + 65)] = i + 7
     for key, value in options.items():
         options_list.append(str(key) + str(value))
-    print("Please select one of the following options:")
+    if len(options_list) == 0:
+        print("No spots left!")
+    print("Player ({}), please select one of the following options:".format(letter))
     print(options_list)
     tmp = ""
     while tmp.upper() not in options_list:
