@@ -28,9 +28,27 @@ def diagonal_check(letter):
         for j in range(-1, -5, -1):
             if board[i][j] == letter and board[i+1][j-1] == letter and board[i+2][j-2] == letter and board[i+3][j-3] == letter:
                 return True
-
     return False
 
+# --- Horizontal Check ---
+# this function checks if there are any horizontal sets of 4 for input "X" or "O"
+
+def horizontal_check(letter):
+    for i in range(6):
+        for j in range(4):
+            if board[i][j] == letter and board[i][j+1] == letter and board[i][j+2] == letter and board[i][j+3] == letter:
+                return True
+    return False
+
+# --- Vertical Check ---
+# this function checks if there are any vertical sets of 4 for input "X" or "O"
+
+def vertical_check(letter):
+    for i in range(3):
+        for j in range(7):
+            if board[i][j] == letter and board[i+1][j] == letter and board[i+2][j] == letter and board[i+3][j] == letter:
+                return True
+    return False
 
 # --- INITIAL VARIABLES ---
 # 6 lists with 7 empty spots as in the original 6x7 board
